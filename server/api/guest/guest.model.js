@@ -6,11 +6,14 @@ import {registerEvents} from './guest.events';
 var GuestSchema = new mongoose.Schema({
   name: String,
   email: String,
-  mobile: String,
+  phone: String,
+  empNo: String,
+  grade: String,
+  designation: String,
+  location: String,
   profilePicture: String,
   active: Boolean,
   tagId: Number,
-  tagUUID: String,
   lastTap: {
     dateTapped: Number,
     screen: String
