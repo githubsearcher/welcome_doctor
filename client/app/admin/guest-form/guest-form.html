@@ -1,0 +1,50 @@
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Admin</a></li>
+    <li class="active">Guest</li>
+  </ol>
+
+  <h1>{{guestFormCtrl.guest._id ? 'Edit' : 'New'}} Guest</h1>
+
+  <form name="guestCreateForm" ng-submit="guestFormCtrl.uploadImage()">
+      <div class="form-group">
+        <label>Name:</label>
+        <input type="text" class="form-control" ng-model="guestFormCtrl.guest.name" />
+      </div>
+      <div class="form-group">
+        <label>Tag Id:</label>
+        <input type="text" class="form-control" ng-model="guestFormCtrl.guest.tagId" />
+      </div>
+      <div class="form-group">
+        <label>File</label>
+        <input type="file"
+               nv-file-select
+               uploader="guestFormCtrl.uploader"
+               accept="image/*;capture=camera"
+               options="{ url: '/api/assets' }"/>
+
+
+        <div class="progress" ng-style="{'visibility': guestFormCtrl.uploader.isUploading ? 'visible':'hidden'}">
+          <div class="progress-bar" role="progressbar" ng-style="{ 'width': guestFormCtrl.uploader.progress + '%' }"></div>
+        </div>
+
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="text" class="form-control" ng-model="guestFormCtrl.guest.email" />
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="text" class="form-control" ng-model="guestFormCtrl.guest.phone" />
+      </div>
+      <div class="form-group">
+        <label>Company</label>
+        <input type="text" class="form-control" ng-model="guestFormCtrl.guest.company" />
+      </div>
+      <div class="form-group">
+        <input type="submit" class="btn btn-success"/>
+        <input type="reset" class="btn btn-default"/>
+      </div>
+  </form>
+</div>

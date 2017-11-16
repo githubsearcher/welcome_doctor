@@ -1,0 +1,100 @@
+<div class="container">
+  <ol class="breadcrumb">
+    <li><a href="#">Home</a></li>
+    <li><a href="#">Admin</a></li>
+    <li class="active">Guest</li>
+  </ol>
+
+  <form>
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search" ng-model="searchText">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
+    </div>
+  </form>
+
+  <table class="table table-striped" style="margin-top: 20px;">
+    <thead>
+    <tr>
+      <th class="col-xs-1">
+        #
+      </th>
+      <th>
+        Name
+      </th>
+      <th class="col-xs-1">
+        Email
+      </th>
+      <th class="col-xs-1">
+        Company
+      </th>
+      <th class="col-xs-1">
+        TAG ID
+      </th>
+      <th class="col-xs-2">
+        Date Created
+      </th>
+      <th class="col-xs-1">
+        Operations
+      </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-if="guestCtrl.loaded && (!guestCtrl.guests || guestCtrl.guests.length === 0)">
+      <td colspan="5" class="text-center">
+        <div style="padding: 70px 0;">
+          No Guests Added Yet.. &nbsp; <a ui-sref="admin.guest-create" class="btn btn-success btn-xs">Add New</a>
+        </div>
+      </td>
+    </tr>
+
+    <tr ng-repeat="guest in guestCtrl.guests | filter: searchText">
+      <td>
+        {{$index + 1 }}
+      </td>
+      <td>
+        <a ui-sref="admin.guest-edit({id: guest._id})">
+          {{guest.name}}
+        </a>
+      </td>
+      <td>
+        {{guest.email}}
+      </td>
+      <td>
+        {{guest.company}}
+      </td>
+      <td>
+        {{guest.tagId}}
+      </td>
+      <td>
+        {{guest.createdAt | date}}
+      </td>
+
+      <td class="text-center">
+        <a class="btn btn-danger btn-xs" ng-click="guestCtrl.remove(guest, $index)">
+          <i class="glyphicon glyphicon-trash"></i>
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div style="padding: 20px; width: 100%; border: 1px solid #EEE">
+    <form class="form-horizontal" ng-submit="guestCtrl.uploadCSV()">
+      <div class="form-group" style="margin-bottom: 0;line-height: 33px;">
+        <label class="col-xs-2">File (.csv):</label>
+        <div class="col-xs-8">
+          <input type="file"
+                 nv-file-select
+                 uploader="guestCtrl.uploader"
+                 options="{ url: '/api/guests/import' }"
+          />
+        </div>
+        <div class="col-xs-2 text-right">
+          <button type="submit" class="btn btn-success"> IMPORT</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
