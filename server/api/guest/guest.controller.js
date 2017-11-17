@@ -12,7 +12,8 @@
 
 import jsonpatch from 'fast-json-patch';
 import Guest from './guest.model';
-const path = require("path");
+
+const path = require('path');
 const Parse = require('csv-parse');
 const fs = require('fs');
 
@@ -21,21 +22,21 @@ function parseCSVFile(sourceFilePath, columns, onNewRecord, handleError, done) {
 
   const parser = Parse({
     delimiter: ',',
-    columns: columns
+    columns
   });
 
-  parser.on("readable", function () {
+  parser.on('readable', function() {
     let record;
-    while (record = parser.read()) {
+    while(record = parser.read()) {
       onNewRecord(record);
     }
   });
 
-  parser.on("error", (error) => {
-    handleError(error)
+  parser.on('error', (error) => {
+    handleError(error);
   });
 
-  parser.on("end", () => {
+  parser.on('end', () => {
     done();
   });
 
@@ -93,15 +94,43 @@ function handleError(res, statusCode) {
   };
 }
 
+export function tap(req, res) {
+  var query = {};
+  if(req.params.type === 'tagId') {
+    query.tagId = req.params.id;
+  } else {
+    return res.status(404).send({status: false, message: 'Wrong TYPE'});
+  }
+  Guest.findOne(query, function(err, guest) {
+    if(err) {
+      return handleError(res, err);
+    }
+    if(!guest) {
+      return res.status(404).send({status: false, message: 'User not found'});
+    }
+    guest.taps = guest.taps || [];
+    guest.lastTap = {
+      dateTapped: Date.now()
+    };
+    guest.taps.push(guest.lastTap);
+    guest.save(function(err) {
+      if(err) {
+        return handleError(res, err);
+      }
+      return res.status(200).json({status: true});
+    });
+  });
+}
+
 export function importGuests(req, res) {
   const filePath = req.file.path;
-  if (filePath.indexOf('.csv') < 0) {
+  if(filePath.indexOf('.csv') < 0) {
     return res
       .status(500)
       .json({
         name: 'UNSUPPORTED_FILE',
         message: 'Please upload .csv file.'
-      })
+      });
   }
   const rows = [];
   parseCSVFile(filePath, true,
@@ -118,13 +147,13 @@ export function importGuests(req, res) {
       console.log('Completed Parsing');
       Guest
         .insertMany(rows)
-        .then(function (response) {
+        .then(function(response) {
           console.log(response);
           res
             .status(200)
             .json(response);
         })
-        .catch(function (error) {
+        .catch(function(error) {
           console.log(error);
           res
             .status(500)
@@ -160,7 +189,12 @@ export function upsert(req, res) {
   if(req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
-  return Guest.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true}).exec()
+  return Guest.findOneAndUpdate({_id: req.params.id}, req.body, {
+    new: true,
+    upsert: true,
+    setDefaultsOnInsert: true,
+    runValidators: true
+  }).exec()
 
     .then(respondWithResult(res))
     .catch(handleError(res));
