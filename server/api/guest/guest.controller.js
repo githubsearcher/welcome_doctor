@@ -96,11 +96,7 @@ function handleError(res, statusCode) {
 
 export function tap(req, res) {
   var query = {};
-  if(req.params.type === 'tagId') {
-    query.tagId = req.params.id;
-  } else {
-    return res.status(404).send({status: false, message: 'Wrong TYPE'});
-  }
+  query.tagId = req.query.tagId;
   Guest.findOne(query, function(err, guest) {
     if(err) {
       return handleError(res, err);

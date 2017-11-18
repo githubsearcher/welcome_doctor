@@ -2,7 +2,7 @@ import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import routing from './main.routes';
 
-export class MainController {4
+export class MainController {
   /*@ngInject*/
 
   constructor($http, $state, $stateParams, FileUploader) {

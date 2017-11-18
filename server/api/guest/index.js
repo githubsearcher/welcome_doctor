@@ -20,6 +20,7 @@ var upload = multer({storage});
 var router = express.Router();
 
 router.get('/', controller.index);
+router.get('/tap', controller.tap);
 router.post('/import', upload.single('file'), controller.importGuests);
 router.get('/:id', controller.show);
 router.post('/', controller.create);

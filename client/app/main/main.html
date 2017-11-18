@@ -1,7 +1,6 @@
 <div class="container">
-  <p class="text-left" style="padding-top: 20px;position: relative">
-    <img src="assets/images/Ericsson_logo.svg" alt="" style="max-width: 100px;"/>
-    <span style="position: absolute;right: 0;bottom: -6px;font-size: 17px;text-transform: uppercase;font-weight: bold;color: #00285e;">Registration</span>
+  <p class="text-left" style="padding-top: 20px;position: relative; font-size: 25px;text-transform: uppercase;font-weight: bold;color: #00285e;">
+    Registration
   </p>
   <hr>
   <form ng-submit="$ctrl.uploadImage()" autocomplete="off">
@@ -34,12 +33,12 @@
         <label>Phone</label>
         <input type="text" class="form-control" ng-model="$ctrl.form.phone" />
       </div>
-      <div class="form-group">
+      <div class="form-group ng-hide">
         <label>Company</label>
         <input type="text" class="form-control" ng-model="$ctrl.form.company" />
       </div>
-      <hr>
-      <div class="form-group">
+      <div class="form-group ng-hide">
+        <hr>
         <label>File</label>
         <input type="file"
                nv-file-select

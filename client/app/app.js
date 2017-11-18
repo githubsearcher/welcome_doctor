@@ -27,10 +27,11 @@ import util from '../components/util/util.module';
 import socket from '../components/socket/socket.service';
 
 import './app.scss';
+import WelcomeComponent from './welcome/welcome.component';
 
 angular.module('welcomeApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
   uiBootstrap, _Auth, account, admin, 'validation.match', navbar, footer, main, constants,
-  socket, util
+  socket, util, WelcomeComponent
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {
