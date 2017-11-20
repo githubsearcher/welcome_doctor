@@ -10,8 +10,15 @@
     </span>
   </div>
 
-  <ul class="text-center">
-    <li ng-repeat="guest in welcomeCtrl.getGuests() | orderBy:'-lastTap.dateTapped'|limitTo:1">{{guest.name}}</li>
+  <ul class="text-center" style="    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    height: 150px;
+    font-size: 50px;
+    line-height: 140px;">
+    <li>{{welcomeCtrl.current.name}}</li>
   </ul>
 
   <style>
