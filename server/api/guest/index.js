@@ -21,6 +21,7 @@ var router = express.Router();
 
 router.get('/', controller.index);
 router.get('/tap', controller.tap);
+router.get('/reset', controller.reset);
 router.post('/import', upload.single('file'), controller.importGuests);
 router.get('/:id', controller.show);
 router.post('/', controller.create);

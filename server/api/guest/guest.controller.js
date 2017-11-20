@@ -215,3 +215,22 @@ export function destroy(req, res) {
     .then(removeEntity(res))
     .catch(handleError(res));
 }
+
+exports.reset = function (req, res) {
+  Guest
+    .update({}, {
+      $unset: {lastTap: 1}
+    }, {
+      multi: true
+    })
+    .exec(function (err, result) {
+      if (err) {
+        return handleError(res, err);
+      }
+      res
+        .status(200)
+        .json({
+          done: true
+        });
+    });
+};

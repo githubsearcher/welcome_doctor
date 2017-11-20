@@ -61,6 +61,18 @@ export class GuestComponent {
     }
   }
 
+  reset() {
+    this
+      .$http
+      .get('/api/guests/reset')
+      .then(() => {
+        alert('Done!');
+      })
+      .catch(() => {
+
+      });
+  }
+
 }
 
 export default angular.module('manualScanningApp.guest', [uiRouter])
