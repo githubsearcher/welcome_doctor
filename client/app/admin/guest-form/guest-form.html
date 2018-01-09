@@ -9,6 +9,10 @@
 
   <form name="guestCreateForm" ng-submit="guestFormCtrl.uploadImage()">
       <div class="form-group">
+        <label>Title:</label>
+        <input type="text" class="form-control" ng-model="guestFormCtrl.guest.title" />
+      </div>
+      <div class="form-group">
         <label>Name:</label>
         <input type="text" class="form-control" ng-model="guestFormCtrl.guest.name" />
       </div>
@@ -41,6 +45,10 @@
       <div class="form-group">
         <label>Company</label>
         <input type="text" class="form-control" ng-model="guestFormCtrl.guest.company" />
+      </div>
+      <div class="form-group">
+        <label>Employee No</label>
+        <input type="text" class="form-control" ng-model="guestFormCtrl.guest.empNo" />
       </div>
       <div class="form-group">
         <input type="submit" class="btn btn-success"/>

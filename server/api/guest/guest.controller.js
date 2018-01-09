@@ -25,9 +25,9 @@ function parseCSVFile(sourceFilePath, columns, onNewRecord, handleError, done) {
     columns
   });
 
-  parser.on('readable', function() {
+  parser.on('readable', function () {
     let record;
-    while(record = parser.read()) {
+    while (record = parser.read()) {
       onNewRecord(record);
     }
   });
@@ -45,8 +45,8 @@ function parseCSVFile(sourceFilePath, columns, onNewRecord, handleError, done) {
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
-  return function(entity) {
-    if(entity) {
+  return function (entity) {
+    if (entity) {
       return res.status(statusCode).json(entity);
     }
     return null;
@@ -54,11 +54,11 @@ function respondWithResult(res, statusCode) {
 }
 
 function patchUpdates(patches) {
-  return function(entity) {
+  return function (entity) {
     try {
       // eslint-disable-next-line prefer-reflect
       jsonpatch.apply(entity, patches, /*validate*/ true);
-    } catch(err) {
+    } catch (err) {
       return Promise.reject(err);
     }
 
@@ -67,8 +67,8 @@ function patchUpdates(patches) {
 }
 
 function removeEntity(res) {
-  return function(entity) {
-    if(entity) {
+  return function (entity) {
+    if (entity) {
       return entity.remove()
         .then(() => {
           res.status(204).end();
@@ -78,8 +78,8 @@ function removeEntity(res) {
 }
 
 function handleEntityNotFound(res) {
-  return function(entity) {
-    if(!entity) {
+  return function (entity) {
+    if (!entity) {
       res.status(404).end();
       return null;
     }
@@ -89,7 +89,7 @@ function handleEntityNotFound(res) {
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
-  return function(err) {
+  return function (err) {
     res.status(statusCode).send(err);
   };
 }
@@ -97,11 +97,11 @@ function handleError(res, statusCode) {
 export function tap(req, res) {
   var query = {};
   query.tagId = req.query.tagId;
-  Guest.findOne(query, function(err, guest) {
-    if(err) {
+  Guest.findOne(query, function (err, guest) {
+    if (err) {
       return handleError(res, err);
     }
-    if(!guest) {
+    if (!guest) {
       return res.status(404).send({status: false, message: 'User not found'});
     }
     guest.taps = guest.taps || [];
@@ -109,8 +109,8 @@ export function tap(req, res) {
       dateTapped: Date.now()
     };
     guest.taps.push(guest.lastTap);
-    guest.save(function(err) {
-      if(err) {
+    guest.save(function (err) {
+      if (err) {
         return handleError(res, err);
       }
       return res.status(200).json({status: true});
@@ -120,7 +120,7 @@ export function tap(req, res) {
 
 export function importGuests(req, res) {
   const filePath = req.file.path;
-  if(filePath.indexOf('.csv') < 0) {
+  if (filePath.indexOf('.csv') < 0) {
     return res
       .status(500)
       .json({
@@ -143,13 +143,13 @@ export function importGuests(req, res) {
       console.log('Completed Parsing');
       Guest
         .insertMany(rows)
-        .then(function(response) {
+        .then(function (response) {
           console.log(response);
           res
             .status(200)
             .json(response);
         })
-        .catch(function(error) {
+        .catch(function (error) {
           console.log(error);
           res
             .status(500)
@@ -160,7 +160,20 @@ export function importGuests(req, res) {
 
 // Gets a list of Guests
 export function index(req, res) {
-  return Guest.find().exec()
+
+  const q = req.query.q;
+  const criteria = {};
+  if (q) {
+    criteria.$or = [
+      {
+        name: new RegExp(q, 'i')
+      }, {
+        email: new RegExp(q, 'i')
+      }
+    ];
+  }
+
+  return Guest.find(criteria).exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -168,6 +181,26 @@ export function index(req, res) {
 // Gets a single Guest from the DB
 export function show(req, res) {
   return Guest.findById(req.params.id).exec()
+    .then(handleEntityNotFound(res))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+// Gets a single Guest from the DB
+export function showByEmpNo(req, res) {
+  return Guest.findOne({
+    empNo: req.params.empNo
+  }).exec()
+    .then(handleEntityNotFound(res))
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+// Gets a single Guest from the DB
+export function showByTagId(req, res) {
+  return Guest.findOne({
+    tagId: req.params.tagId
+  }).exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResult(res))
     .catch(handleError(res));
@@ -182,7 +215,7 @@ export function create(req, res) {
 
 // Upserts the given Guest in the DB at the specified ID
 export function upsert(req, res) {
-  if(req.body._id) {
+  if (req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
   return Guest.findOneAndUpdate({_id: req.params.id}, req.body, {
@@ -198,7 +231,7 @@ export function upsert(req, res) {
 
 // Updates an existing Guest in the DB
 export function patch(req, res) {
-  if(req.body._id) {
+  if (req.body._id) {
     Reflect.deleteProperty(req.body, '_id');
   }
   return Guest.findById(req.params.id).exec()

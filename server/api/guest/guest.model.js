@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 import {registerEvents} from './guest.events';
 
 var GuestSchema = new mongoose.Schema({
+  title: String,
   name: String,
   email: String,
   phone: String,

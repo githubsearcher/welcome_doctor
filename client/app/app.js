@@ -1,7 +1,7 @@
 'use strict';
 
 import angular from 'angular';
-// import ngAnimate from 'angular-animate';
+import ngAnimate from 'angular-animate';
 import ngCookies from 'angular-cookies';
 import ngResource from 'angular-resource';
 import ngSanitize from 'angular-sanitize';
@@ -31,7 +31,7 @@ import WelcomeComponent from './welcome/welcome.component';
 
 angular.module('welcomeApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
   uiBootstrap, _Auth, account, admin, 'validation.match', navbar, footer, main, constants,
-  socket, util, WelcomeComponent
+  socket, util, WelcomeComponent, ngAnimate
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

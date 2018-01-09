@@ -23,6 +23,8 @@ router.get('/', controller.index);
 router.get('/tap', controller.tap);
 router.get('/reset', controller.reset);
 router.post('/import', upload.single('file'), controller.importGuests);
+router.get('/emp-no/:empNo', controller.showByEmpNo);
+router.get('/tag-id/:tagId', controller.showByTagId);
 router.get('/:id', controller.show);
 router.post('/', controller.create);
 router.put('/:id', controller.upsert);

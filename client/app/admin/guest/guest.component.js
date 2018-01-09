@@ -53,6 +53,17 @@ export class GuestComponent {
     }
   }
 
+  guestsWithProfilePicture = [13140007, 13140903, 13140913, 13141057, 13141207, 5012000038, 5012000598, 5012000732, 5012001130, 5012001210, 5012001283, 5012001322, 5012001377, 5012001405, 5012001457, 5012001669, 5012001772, 5012001854, 5012001909, 5012002013, 5012002079, 5012002120, 5012002351, 5012002492, 5012002529, 5012002588, 5012002650, 5012002698, 5012002786, 5012002793, 5012003015, 5012003035, 5012003038, 5012003052, 5012003114, 5012000651].map(a => a.toString());
+
+  hasProfilePicture(guest) {
+    return this.guestsWithProfilePicture.indexOf(guest.empNo) >= 0;
+  }
+
+  tap(guest) {
+    this.$http.get('/api/guests/tap?tagId=' + guest.tagId);
+  }
+
+
   uploadCSV() {
     if (this.uploader.queue && this.uploader.queue.length) {
       this.uploader.uploadAll();
