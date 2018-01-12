@@ -2,6 +2,7 @@
   font-family: "Batman";
   src: url("/assets/fonts/batman/batmfa__.ttf");
 }
+
 .fade-element-in.ng-enter {
   transition: 0.8s linear all;
   opacity: 0;
@@ -19,6 +20,76 @@
   transition: 0.3s linear all;
   opacity: 1;
 }
+
 .fade-element-in.ng-leave.ng-leave-active {
   opacity: 0;
+}
+
+.screen-wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: #b7faf2;
+  position: absolute;
+
+  .screen {
+    width: 1024px;
+    height: 768px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    margin: auto;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    &.welcome {
+      background: url('/assets/images/bg.jpg');
+
+      .screen-container {
+        width: 100%;
+        height: 100%;
+        position: relative;
+        h1 {
+          padding: 200px 0 25px 0;
+          margin: 0;
+          font-family: 'Batman', sans-serif;
+          font-size: 40px;
+          color: #ef5497;
+        }
+
+        .image-container {
+          text-align: center;
+          img {
+            max-width: 400px;
+            max-height: 250px;
+          }
+        }
+
+        .image-list {
+          position: absolute;
+          width: 100%;
+          bottom: 0;
+          text-align: center;
+          ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            li {
+              display: inline-block;
+              padding: 10px;
+              img {
+                max-height: 75px;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    &.idle {
+      background: url('/assets/images/idle.jpg');
+    }
+  }
 }

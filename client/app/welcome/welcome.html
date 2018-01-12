@@ -1,45 +1,32 @@
-<div style="background: url('/assets/images/bg.jpg');width: 1024px; height: 768px;    overflow: hidden; margin: auto; position: relative;background-repeat: no-repeat;background-size: cover;background-color: #b2d5e9;">
+<div class="screen-wrapper">
+  <div ng-if="!welcomeCtrl.idle" class="screen welcome fade-element-in">
+    <div class="screen-container">
+      <div ng-if="welcomeCtrl.current1.name" class="fade-element-in">
+        <h1 style="" class="text-center">
+          {{welcomeCtrl.current1.name}}
+        </h1>
+        <div class="image-container">
+          <img alt="" ng-src="{{welcomeCtrl.getImage(welcomeCtrl.current1)}}"/>
+        </div>
+      </div>
+      <div ng-if="welcomeCtrl.current2.name" class="fade-element-in">
+        <h1 class="text-center">
+          {{welcomeCtrl.current2.name}}
+        </h1>
+        <div class="image-container">
+          <img alt="" ng-src="{{welcomeCtrl.getImage(welcomeCtrl.current2)}}"/>
+        </div>
+      </div>
 
-  <div class="logos clearfix">
-    <img src="/assets/images/welcome-logo.png" alt="" style="max-width: 150px; margin: 20px;" class="pull-left">
-    <img src="/assets/images/sony-logo.png" alt="" style="max-width: 100px; margin: 20px;" class="pull-right">
-  </div>
-  <div ng-if="welcomeCtrl.current1.name" class="fade-element-in">
-    <h1 style="padding: 10px 0 0 0; margin: 0; font-family: 'Batman', sans-serif;font-size: 70px;" class="text-center">
-      Welcome
-    </h1>
-    <h1 style="padding: 0; margin: 0; font-family: 'Batman', sans-serif;font-size: 40px;" class="text-center">
-      {{welcomeCtrl.current1.name}}
-    </h1>
-    <h1 style="padding: 0 0 10px 0; margin: 0; font-family: 'Batman', sans-serif;font-size: 35px;" class="text-center"
-        ng-hide="welcomeCtrl.hasProfilePicture(welcomeCtrl.current1)">
-      To
-    </h1>
-    <div class="text-center">
-      <img alt="" ng-src="{{welcomeCtrl.getImage(welcomeCtrl.current1)}}" style="max-width: 400px; max-height: 250px;"/>
+      <div class="image-list" ng-if="welcomeCtrl.showImageList">
+        <ul>
+          <li ng-repeat="guest in welcomeCtrl.old" class="fade-element-in">
+            <img ng-src="{{welcomeCtrl.getImage(guest)}}" alt="">
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
-  <div ng-if="welcomeCtrl.current2.name" class="fade-element-in">
-    <h1 style="padding: 10px 0 0 0; margin: 0; font-family: 'Batman', sans-serif;font-size: 70px;" class="text-center">
-      Welcome
-    </h1>
-    <h1 style="padding: 0; margin: 0; font-family: 'Batman', sans-serif;font-size: 40px;" class="text-center">
-      {{welcomeCtrl.current2.name}}
-    </h1>
-    <h1 style="padding: 0 0 10px 0; margin: 0; font-family: 'Batman', sans-serif;font-size: 35px;" class="text-center"
-        ng-hide="welcomeCtrl.hasProfilePicture(welcomeCtrl.current2)">
-      To
-    </h1>
-    <div class="text-center">
-      <img alt="" ng-src="{{welcomeCtrl.getImage(welcomeCtrl.current2)}}" style="max-width: 400px; max-height: 250px;"/>
-    </div>
-  </div>
-
-  <div class="text-center" style="position: absolute; width: 100%; bottom: 0;">
-    <ul style="margin: 0; padding: 0; list-style: none;">
-      <li ng-repeat="guest in welcomeCtrl.old" class="fade-element-in" style="display: inline-block; padding: 10px; ">
-        <img ng-src="{{welcomeCtrl.getImage(guest)}}" style="max-height: 75px;" alt="">
-      </li>
-    </ul>
+  <div ng-if="welcomeCtrl.idle" class="screen welcome idle fade-element-in">
   </div>
 </div>
