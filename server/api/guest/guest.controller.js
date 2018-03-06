@@ -97,6 +97,9 @@ function handleError(res, statusCode) {
 export function tap(req, res) {
   var query = {};
   query.tagId = req.query.tagId;
+  if(!query.tagId){
+    return res.status(404).send({status: false, message: 'User not found'});
+  }
   Guest.findOne(query, function (err, guest) {
     if (err) {
       return handleError(res, err);

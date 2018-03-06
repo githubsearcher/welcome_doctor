@@ -21,7 +21,7 @@ export class WelcomeComponent {
   queue = [];
   current2 = true;
   idle;
-  showImageList = true;
+  showImageList = false;
   idleScreenEnabled = true;
 
   setIdle(status) {
@@ -31,7 +31,7 @@ export class WelcomeComponent {
   }
 
   $onInit() {
-    const IDLE_TIME = -20;
+    const IDLE_TIME = -90;
     const NEXT_PICTURE_TIME = 5;
     this.setIdle(true);
 
@@ -109,7 +109,7 @@ export class WelcomeComponent {
   }
 
   getImage(guest) {
-    return guest.profilePicture ? `https://res.cloudinary.com/hvyga5upg/image/upload/c_scale,w_400/${guest.profilePicture}.jpg` : '/assets/images/user.png';
+    return guest.profilePicture ? `https://res.cloudinary.com/hydzbrdlq/image/upload/c_scale,w_400/${guest.profilePicture}.jpg` : '/assets/images/user.png';
   }
 
   getGuests() {

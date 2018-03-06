@@ -60,6 +60,9 @@ export class GuestComponent {
   }
 
   tap(guest) {
+    if(!guest.tagId){
+      return alert('No Tag ID saved.');
+    }
     this.$http.get('/api/guests/tap?tagId=' + guest.tagId);
   }
 

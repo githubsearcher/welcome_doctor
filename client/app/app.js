@@ -7,6 +7,7 @@ import ngResource from 'angular-resource';
 import ngSanitize from 'angular-sanitize';
 
 import 'angular-socket-io';
+import 'ng-file-upload';
 
 import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
@@ -31,7 +32,7 @@ import WelcomeComponent from './welcome/welcome.component';
 
 angular.module('welcomeApp', [ngCookies, ngResource, ngSanitize, 'btford.socket-io', uiRouter,
   uiBootstrap, _Auth, account, admin, 'validation.match', navbar, footer, main, constants,
-  socket, util, WelcomeComponent, ngAnimate
+  socket, util, WelcomeComponent, ngAnimate, 'ngFileUpload'
 ])
   .config(routeConfig)
   .run(function($rootScope, $location, Auth) {

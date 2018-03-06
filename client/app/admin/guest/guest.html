@@ -62,7 +62,7 @@
         {{guest.email}}
       </td>
       <td>
-        <span class="label label-success" ng-if="guestCtrl.hasProfilePicture(guest)">YES</span>
+        <span class="label label-success" ng-if="guest.profilePicture">YES</span>
       </td>
       <td>
         {{guest.tagId}}
@@ -72,7 +72,6 @@
       </td>
 
       <td class="text-center">
-        <a class="btn btn-default btn-xs" ng-click="guestCtrl.tap(guest)" >TAP</a>
         <a class="btn btn-danger btn-xs" ng-click="guestCtrl.remove(guest, $index)">
           <i class="glyphicon glyphicon-trash"></i>
         </a>
