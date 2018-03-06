@@ -1,6 +1,7 @@
 'use strict';
 
 var express = require('express');
+var cors = require('cors');
 var controller = require('./guest.controller');
 var multer = require('multer');
 
@@ -20,11 +21,14 @@ var upload = multer({storage});
 var router = express.Router();
 
 router.get('/', controller.index);
+router.get('/sync', controller.sync);
+router.get('/interval/:max', controller.interval);
 router.get('/tap', controller.tap);
 router.get('/reset', controller.reset);
 router.post('/import', upload.single('file'), controller.importGuests);
+router.post('/bulk', controller.bulkImportGuests);
 router.get('/emp-no/:empNo', controller.showByEmpNo);
-router.get('/tag-id/:tagId', controller.showByTagId);
+router.get('/tag-id/:tagId', cors(),controller.showByTagId);
 router.get('/:id', controller.show);
 router.post('/', controller.create);
 router.put('/:id', controller.upsert);

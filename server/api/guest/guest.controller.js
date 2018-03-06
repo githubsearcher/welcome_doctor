@@ -121,6 +121,23 @@ export function tap(req, res) {
   });
 }
 
+export function bulkImportGuests(req, res) {
+  Guest
+    .insertMany(req.body.guests)
+    .then(function (response) {
+      console.log(response);
+      res
+        .status(200)
+        .json({});
+    })
+    .catch(function (error) {
+      console.log(error);
+      res
+        .status(500)
+        .json(error);
+    });
+}
+
 export function importGuests(req, res) {
   const filePath = req.file.path;
   if (filePath.indexOf('.csv') < 0) {
@@ -177,6 +194,38 @@ export function index(req, res) {
   }
 
   return Guest.find(criteria).exec()
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+// Gets a list of Guests
+export function sync(req, res) {
+  return Guest
+    .find({
+      tagId: {
+        $exists: true,
+        $nin: [null, ''],
+      }
+    })
+    .lean()
+    .exec()
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+}
+
+// Gets a list of Guests
+export function interval(req, res) {
+  return Guest
+    .find({
+      tagId: {
+        $exists: true,
+        $nin: [null, ''],
+      }
+    })
+    .sort({updatedAt: -1})
+    .limit(parseInt(req.params.max))
+    .lean()
+    .exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
