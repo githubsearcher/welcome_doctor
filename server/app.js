@@ -21,7 +21,7 @@ mongoose.connection.on('error', function(err) {
 // Setup server
 var app = express();
 var server = http.createServer(app);
-var socketio = require('socket.io')(server, {
+var socketio = require('socket.io')(server,  {
   serveClient: config.env !== 'production',
   path: '/socket.io-client'
 });
